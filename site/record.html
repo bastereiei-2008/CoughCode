@@ -208,5 +208,20 @@
       if (have) { playBtn.disabled = false; redoBtn.disabled = false; enableNext(); }
     })();
   </script>
+  <script>
+function goHome(){
+  try{
+    const ref = document.referrer;
+    if(ref && new URL(ref).origin === location.origin){
+      history.back();                 // เคยอยู่หน้าเดิมมาก่อน → ย้อนกลับ
+      return;
+    }
+  }catch(e){}
+  // ไม่เคยเข้ามาจากหน้าเดิม → ไปที่หน้าหลัก
+  // ถ้าเป็นเว็บหน้าเดียวใช้ '#home', ถ้าเป็นหลายหน้าให้เปลี่ยนเป็น '/index.html#home'
+  location.href = '/#home';
+}
+</script>
+
 </body>
 </html>
