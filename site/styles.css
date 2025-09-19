@@ -457,28 +457,5 @@ header.navbar .nav-links a{
 
 
 
-/* ความสูง navbar ของคุณ กะไว้ก่อน 56px (แก้เลขให้ตรงของจริงได้) */
-:root{ --nav-h: 56px; }
-@media (min-width: 769px){ :root{ --nav-h: 64px; } }
-
-/* 1) ให้เวลาสกรอลไป anchor ใดๆ เว้นที่ด้านบนเท่าความสูง navbar */
-html{ scroll-padding-top: calc(var(--nav-h) + 10px); }
-
-/* 2) ที่หัวข้อหรือ section เป้าหมาย ให้กันบนเพิ่มอีกนิด */
-#symptoms,
-.symptoms-section,
-h2.section-title[data-anchor="symptoms"]{
-  scroll-margin-top: calc(var(--nav-h) + 10px);
-}
-
-/* กันกรณี margin-collapsing ทำให้หัวข้อไปติดขอบบน */
-.symptoms-section .section-title{ margin-top: 0.2rem; }
-.symptoms-section{ padding-top: 8px; }
-
-
-:root{ --nav-h: 56px; }
-@media (min-width: 769px){ :root{ --nav-h: 64px; } }
-
-.nav-spacer{ height: calc(var(--nav-h) + 8px); }
 
 
