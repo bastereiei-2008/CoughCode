@@ -471,3 +471,21 @@ header.navbar .nav-links a{
 main.card{ padding-top: 0.01px; } /* กัน margin-collapsing */
 
 
+
+
+
+
+
+
+/* ปรับตามความสูงจริงของ navbar คุณ (เดสก์ท็อป ~64px, มือถือ ~56px) */
+:root{ --nav-h: 64px; }
+
+/* เวลาคลิกลิงก์ไปยัง anchor ใด ๆ ให้เผื่อที่ด้านบน */
+html{ scroll-padding-top: var(--nav-h); }
+
+/* จุดหัวข้ออาการร่วม – ต้องมี id="symptoms" ที่ <h1> หรือ <main> */
+#symptoms{ scroll-margin-top: var(--nav-h); }
+
+/* กันการจัดวางให้เริ่มต้นที่ด้านบนเท่ากันทั้งสองฝั่ง */
+.form-grid{ align-items: start; } /* ถ้าคุณใช้ grid วางเช็กบ็อกซ์ */
+main.card{ margin-top: 0; }       /* รีเซ็ตกรณีมี margin-top จากที่อื่น */
