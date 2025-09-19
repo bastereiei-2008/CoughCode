@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cough Code — ผลวินิจฉัยเสร็จสิ้น</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">Cough Code</div>
+      <div class="header-actions">
+        <a class="btn" href="index.html">เริ่มใหม่</a>
+        <div class="theme-switch minimal" title="สลับโหมด">
+          <input type="checkbox" id="themeToggle" />
+          <label for="themeToggle"><i class="thumb"></i></label>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero center">
+      <h1 class="gradient-text">วิเคราะห์เสร็จสิ้น</h1>
+      <p class="muted" id="modeNote">แสดง 3 โรคที่มีโอกาสสูงสุดจากการประเมินเบื้องต้น</p>
+    </section>
+
+    <section class="container section" id="top1">
+      <div class="card">
+        <h2 class="center">คุณมีโอกาสที่จะเป็น</h2>
+        <div class="kpi">
+          <div class="pill"><span class="muted">อันดับ 1</span><b id="topName">—</b></div>
+          <div class="pill"><span class="muted">ความน่าจะเป็น</span><b id="topProb">—</b></div>
+        </div>
+        <div id="top3List" class="list"></div>
+        <p class="muted small">ผลนี้เป็นการประเมินเบื้องต้น ไม่ใช่การวินิจฉัยทางการแพทย์</p>
+        <style>
+  #top1, #top1 * { color:#fff !important; }
+  #top1 .muted { opacity:1 !important; }
+</style>
+
+      </div>
+    </section>
+
+
+
+    <section class="container section">
+      <div class="card">
+        <h2>คำแนะนำเบื้องต้น</h2>
+        <ul class="advice" id="adviceList"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container center"><p class="muted">ผลวินิจฉัยนี้เป็นการประเมินเบื้องต้นเท่านั้น ไม่สามารถวินิจฉัยแทนแพทย์ได้</p></div></footer>
+
+<script>
+(() => {
+  // ดึงผลวินิจฉัยจาก sessionStorage
+  const diagRaw = sessionStorage.getItem('diagnosis');
+  if (!diagRaw) { location.href = 'symptoms.html'; return; }
+
+  let data;
+  try { data = JSON.parse(diagRaw); }
+  catch { data = { conditions:{} }; }
+
+  // แปลงเป็น Top-3 แล้วแสดงผล
+  const box = document.getElementById('resultBox');   // เปลี่ยนให้ตรงกับ id กล่องผลของคุณ
+  const entries = Object.entries(data.conditions || {})
+                  .sort((a,b)=>b[1]-a[1]).slice(0,3);
+
+  box.innerHTML = entries.map(([name,p], i) =>
+    `<div class="item"><b>${i+1}. ${name}</b> — ${(p*100).toFixed(1)}%</div>`
+  ).join('');
+
+  // บอกว่าเป็นผลจำลองหรือไม่
+  if (sessionStorage.getItem('diag_fallback') === '1') {
+    const note = document.getElementById('note');
+    if (note) note.textContent = 'ตัวอย่างการแสดงผล (เชื่อมต่อเซิร์ฟเวอร์ไม่ได้)';
+  }
+})();
+</script>
+
+
+  <script src="theme.js" defer></script>
+</body>
+</html>
+

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>อัดเสียง</title>
+
+  <!-- ถ้ามี styles.css / theme.js อยู่แล้ว ใช้ของเดิมได้ -->
+  <link rel="stylesheet" href="styles.css" />
+  <script src="theme.js" defer></script>
+
+  <style>
+    /* เสริมเล็กน้อยให้ปุ่มไมค์อยู่กลาง (จะไม่ทับของ styles.css) */
+    .rec-wrap{max-width:720px;margin:40px auto;padding:16px;text-align:center}
+    .mic-btn{
+      width:120px;height:120px;border-radius:999px;border:none;cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;
+      box-shadow:0 8px 24px rgba(0,0,0,.12); transition:transform .15s ease;
+      background:var(--brand, #3b82f6); color:#fff; font-size:38px;
+    }
+    .mic-btn.rec{ background:#ef4444; }
+    .mic-btn:active{ transform:scale(.98); }
+
+    .hint{opacity:.8;margin-top:12px}
+    .timer{font-variant-numeric:tabular-nums;margin-top:6px}
+    .btn-row{display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+    .btn{
+      padding:10px 16px;border-radius:12px;border:1px solid rgba(0,0,0,.08);
+      background:#fff;cursor:pointer
+    }
+    .btn.primary{background:#111827;color:#fff;border-color:#111827}
+    .btn[disabled]{opacity:.5;pointer-events:none}
+  </style>
+</head>
+<body>
+  <header class="container" style="text-align:center;margin-top:20px">
+    <h1>อัดเสียงไอ</h1>
+    <p class="hint">กดปุ่มวงกลมเพื่อเริ่ม/หยุดอัดเสียง (แนะนำ 3–5 วินาที)</p>
+  </header>
+
+  <main class="rec-wrap">
+    <!-- ปุ่มไมค์ -->
+    <button id="micBtn" class="mic-btn" aria-pressed="false" title="เริ่มอัด/หยุดอัดเสียง">
+  <!-- ไอคอนไมค์สีขาว -->
+  <svg width="46" height="46" viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="#fff"
+      d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Zm-7-3a1 1 0 1 0-2 0 9 9 0 0 0 8 8v3h2v-3a9 9 0 0 0 8-8 1 1 0 1 0-2 0 7 7 0 0 1-14 0Z"/>
+  </svg>
+</button>
+
+    <div class="timer" id="timer">00:00</div>
+
+    <div class="btn-row">
+      <button id="playBtn" class="btn" disabled>เล่นตัวอย่าง</button>
+      <button id="redoBtn" class="btn" disabled>อัดใหม่</button>
+      <a id="nextBtn" class="btn primary" href="#" aria-disabled="true">ถัดไป</a>
+    </div>
+
+    <p id="status" class="hint"></p>
+  </main>
+
+  <script>
+    // ------- องค์ประกอบ UI -------
+    const micBtn   = document.getElementById('micBtn');
+    const playBtn  = document.getElementById('playBtn');
+    const redoBtn  = document.getElementById('redoBtn');
+    const nextBtn  = document.getElementById('nextBtn');
+    const timerEl  = document.getElementById('timer');
+    const statusEl = document.getElementById('status');
+
+    // ------- ตัวแปรสถานะ -------
+    let mediaRecorder;
+    let chunks = [];
+    let stream;
+    let recording = false;
+    let audioBlob = null;
+    let timerId, seconds = 0;
+
+    // ฟังก์ชันตัวจับเวลา
+    function tick() {
+      seconds++;
+      const mm = String(Math.floor(seconds/60)).padStart(2,'0');
+      const ss = String(seconds%60).padStart(2,'0');
+      timerEl.textContent = `${mm}:${ss}`;
+    }
+    function startTimer(){ seconds = 0; timerEl.textContent = '00:00'; timerId = setInterval(tick,1000); }
+    function stopTimer(){ clearInterval(timerId); }
+
+    // เปิดใช้งานปุ่ม "ถัดไป"
+    function enableNext() {
+      nextBtn.setAttribute('aria-disabled','false');
+      nextBtn.removeAttribute('disabled');
+      nextBtn.href = './symptoms.html';
+      nextBtn.style.pointerEvents = 'auto';
+      nextBtn.style.opacity = '1';
+    }
+    // ปิดปุ่ม "ถัดไป" จนกว่าจะมีเสียง
+    function disableNext() {
+      nextBtn.setAttribute('aria-disabled','true');
+      nextBtn.href = '#';
+      nextBtn.style.pointerEvents = 'none';
+      nextBtn.style.opacity = '.6';
+    }
+    disableNext();
+
+    // ขอสิทธิ์ไมค์และเตรียม MediaRecorder
+    async function initRecorder() {
+      if (mediaRecorder) return;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+        mediaRecorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+        mediaRecorder.onstop = async () => {
+          stopTimer();
+          recording = false;
+          micBtn.classList.remove('rec');
+          statusEl.textContent = 'อัดเสร็จแล้ว';
+          audioBlob = new Blob(chunks, { type: 'audio/webm' });
+          chunks = [];
+
+          // เก็บเป็น dataURL ให้หน้า symptoms ใช้งาน
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            sessionStorage.setItem('audioDataURL', reader.result);
+            playBtn.disabled = false;
+            redoBtn.disabled = false;
+            enableNext();
+          };
+          reader.readAsDataURL(audioBlob);
+        };
+      } catch(err) {
+        console.error(err);
+        alert('ไม่สามารถเข้าถึงไมโครโฟนได้ กรุณาอนุญาตการใช้งานไมค์');
+      }
+    }
+
+    // เริ่ม/หยุดอัด
+    async function toggleRecord() {
+      await initRecorder();
+      if (!mediaRecorder) return;
+
+      if (!recording) {
+        // เริ่มอัด
+        audioBlob = null;
+        playBtn.disabled = true;
+        redoBtn.disabled = true;
+        disableNext();
+
+        chunks = [];
+        mediaRecorder.start();
+        recording = true;
+        micBtn.classList.add('rec');
+        micBtn.setAttribute('aria-pressed','true');
+        statusEl.textContent = 'กำลังอัดเสียง...';
+        startTimer();
+
+        // ป้องกันอัดยาวเกิน 10 นาที (กันค้าง)
+        setTimeout(() => { if (recording) stopRecord(); }, 10 * 60 * 1000);
+      } else {
+        // หยุดอัด
+        stopRecord();
+      }
+    }
+
+    function stopRecord() {
+      if (mediaRecorder && recording) {
+        mediaRecorder.stop();
+        micBtn.setAttribute('aria-pressed','false');
+      }
+    }
+
+    // เล่นตัวอย่าง
+    function playPreview() {
+      if (!audioBlob) return;
+      const url = URL.createObjectURL(audioBlob);
+      const a = new Audio(url);
+      a.play();
+    }
+
+    // อัดใหม่
+    function redo() {
+      audioBlob = null;
+      sessionStorage.removeItem('audioDataURL');
+      timerEl.textContent = '00:00';
+      statusEl.textContent = '';
+      playBtn.disabled = true;
+      redoBtn.disabled = true;
+      disableNext();
+    }
+
+    // ผูกอีเวนต์
+    micBtn.addEventListener('click', toggleRecord);
+    playBtn.addEventListener('click', playPreview);
+    redoBtn.addEventListener('click', redo);
+
+    // ถ้ากลับมาจากหน้าอื่นแล้วเคยอัดไว้ ให้กด "ถัดไป" ได้เลย
+    (function restoreIfAny(){
+      const have = sessionStorage.getItem('audioDataURL');
+      if (have) { playBtn.disabled = false; redoBtn.disabled = false; enableNext(); }
+    })();
+  </script>
+</body>
+</html>
