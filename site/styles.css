@@ -476,5 +476,9 @@ h2.section-title[data-anchor="symptoms"]{
 .symptoms-section{ padding-top: 8px; }
 
 
+:root{ --nav-h: 56px; }
+@media (min-width: 769px){ :root{ --nav-h: 64px; } }
+
+.nav-spacer{ height: calc(var(--nav-h) + 8px); }
 
 
