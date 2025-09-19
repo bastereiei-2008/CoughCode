@@ -8,9 +8,7 @@ app = FastAPI(title="Cough Code API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://127.0.0.1:5500", "http://localhost:5500",     # Dev (Live Server)
-        "https://<YOUR_VERCEL_APP>.vercel.app"                # TODO: เปลี่ยนเป็นโดเมนจริงหลัง Deploy
-    ],
+    allow_origins=["https://coughcode.vercel.app"],
     allow_origin_regex=r"^https://.*\.vercel\.app$",
     allow_credentials=True,
     allow_methods=["*"],
