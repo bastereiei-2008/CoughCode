@@ -8,25 +8,33 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-row">
-      <div class="brand">Cough Code</div>
+<header class="navbar">
+  <div class="container row">
+    <div class="logo">CoughCode</div>
 
-      <div class="header-actions">
-        <nav class="nav">
-          <a href="#">หน้าหลัก</a>
-          <a href="#more">ข้อมูลเพิ่มเติม</a>
-          <a href="#about">เกี่ยวกับเรา</a>
+    <!-- เมนูเดสก์ท็อป (เห็นเฉพาะจอใหญ่) -->
+    <nav class="nav-links">
+      <a href="#about">ข้อมูลเพิ่มเติม</a>
+      <a href="#aboutus">เกี่ยวกับเรา</a>
+      <a href="#howto">วิธีใช้งาน</a>
+    </nav>
+
+    <!-- ขวาบน: ปุ่มธีมหรือไอคอนอื่นๆ + ปุ่ม 3 ขีด (เห็นเฉพาะมือถือ) -->
+    <div class="right-tools">
+      <!-- ใส่ปุ่มสลับธีมของคุณไว้ตรงนี้ได้ -->
+      <!-- ปุ่ม 3 ขีดแบบไม่ต้องใช้ JS -->
+      <details class="nav-toggle" role="navigation" aria-label="เมนูหลัก">
+        <summary class="hamburger" aria-label="เปิดเมนู"><span></span><span></span><span></span></summary>
+        <div class="sheet">
+          <a href="#about">ข้อมูลเพิ่มเติม</a>
+          <a href="#aboutus">เกี่ยวกับเรา</a>
           <a href="#howto">วิธีใช้งาน</a>
-          <a href="#contact">ติดต่อ</a>
-        </nav>
-        <div class="theme-switch minimal" title="สลับโหมด">
-          <input type="checkbox" id="themeToggle" />
-          <label for="themeToggle"><i class="thumb"></i></label>
         </div>
-      </div>
+      </details>
     </div>
-  </header>
+  </div>
+</header>
+
 
   <main>
     <section class="container hero center">
