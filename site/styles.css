@@ -394,4 +394,7 @@ p, li{
   .navbar .nav-links{ justify-content:flex-start; } /* ให้ชิดซ้ายจะเหลือที่มากขึ้น */
 }
 
+@media (max-width: 420px){
+  .navbar .nav-links a{ font-size: 0.95rem; }
+}
 
