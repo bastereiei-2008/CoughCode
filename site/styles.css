@@ -368,3 +368,57 @@ p, li{
   }
   .navbar .nav-links a{ flex: 0 0 auto; }
 }
+
+
+
+
+
+
+
+
+
+/* --- Navbar: 2 ปุ่มกลาง + ปุ่มธีมขวา --- */
+header.navbar{
+  position: sticky; top: 0; z-index: 100;
+  padding: max(8px, env(safe-area-inset-top)) 12px 8px;  /* กันโนชบนมือถือ */
+  backdrop-filter: blur(6px);
+}
+
+/* โครงเรียงซ้าย-กลาง-ขวา */
+header.navbar .bar{ display:flex; align-items:center; gap:12px; }
+header.navbar .logo{ flex:0 0 auto; }              /* Cough Code */
+header.navbar .right-tools{ flex:0 0 auto; display:flex; align-items:center; gap:8px; }
+
+/* 2 ลิงก์ตรงกลาง: ไม่ตัดคำ, เว้นระยะ, จับกึ่งกลางจริง */
+header.navbar .nav-links{
+  display:flex; gap: clamp(14px, 6vw, 32px);
+  margin-inline: auto;            /* จัดให้อยู่กลางแถบ */
+  flex: 0 1 auto;                 /* กว้างตามเนื้อหา */
+  min-width: 0;
+}
+header.navbar .nav-links a{
+  white-space: nowrap;            /* ห้ามตัดกลางคำไทย */
+  word-break: keep-all;
+  padding: 10px 6px;
+  line-height: 1;
+  min-height: 44px;               /* พื้นที่แตะตามมาตรฐาน */
+  display: inline-flex; align-items: center;
+}
+
+/* จอเล็ก: ลดฟอนต์เมนูนิด, เว้นระยะให้พอดี */
+@media (max-width: 420px){
+  header.navbar .nav-links a{ font-size: .95rem; }
+  header.navbar .nav-links{ gap: 16px; }
+}
+
+/* เล็กมาก ๆ: ให้เมนูเลื่อนได้แทนการขึ้นบรรทัดใหม่ (ไม่บังคับใช้ก็ได้) */
+@media (max-width: 340px){
+  header.navbar .nav-links{ flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  header.navbar .nav-links::-webkit-scrollbar{ display:none; }
+  header.navbar .nav-links > *{ flex: 0 0 auto; }
+}
+
+/* กันเคสที่มี media query อื่น ๆ ไปซ่อนปุ่มธีม */
+@media (max-width: 768px){
+  header.navbar .right-tools{ display:flex !important; }
+}
