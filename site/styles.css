@@ -474,3 +474,15 @@ h2.section-title[data-anchor="symptoms"]{
 /* กันกรณี margin-collapsing ทำให้หัวข้อไปติดขอบบน */
 .symptoms-section .section-title{ margin-top: 0.2rem; }
 .symptoms-section{ padding-top: 8px; }
+
+
+
+/* ความสูง navbar โดยประมาณ ปรับเลขตามของจริง */
+:root{ --nav-h: 56px; }
+@media (min-width: 769px){ :root{ --nav-h: 64px; } }
+
+/* เผื่อที่ด้านบนให้การ์ดหน้าอาการร่วม */
+main.card{
+  padding-top: calc(var(--nav-h) + 12px) !important;
+}
+
