@@ -477,12 +477,4 @@ h2.section-title[data-anchor="symptoms"]{
 
 
 
-/* ความสูง navbar โดยประมาณ ปรับเลขตามของจริง */
-:root{ --nav-h: 56px; }
-@media (min-width: 769px){ :root{ --nav-h: 64px; } }
-
-/* เผื่อที่ด้านบนให้การ์ดหน้าอาการร่วม */
-main.card{
-  padding-top: calc(var(--nav-h) + 12px) !important;
-}
 
