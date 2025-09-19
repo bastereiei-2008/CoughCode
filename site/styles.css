@@ -359,42 +359,12 @@ p, li{
     display:flex; align-items:center; gap: 18px; flex-wrap: wrap;
   }
 }
-/* --- NAV: แก้ปัญหาคำไทยถูกตัดกลางคำ --- */
-.navbar .row{
-  display:flex; align-items:center; gap:12px;
-}
-
-/* กล่องลิงก์เมนู: ให้เป็น flex และยอมขึ้นบรรทัดใหม่เป็น "กลุ่ม" แทน */
-.navbar .nav-links{
-  display:flex;
-  flex:1 1 auto;             /* กินพื้นที่ที่เหลือ */
-  justify-content:center;
-  flex-wrap: wrap;           /* ไม่พอที่ให้ขึ้นแถวใหม่ */
-  gap: clamp(8px, 2.4vw, 18px);
-  min-width: 0;
-}
-
-/* ลิงก์แต่ละอัน: ห้ามตัดคำกลางคำไทย */
-.navbar .nav-links a{
-  white-space: nowrap;       /* คีย์หลัก: อยู่บรรทัดเดียว */
-  word-break: keep-all;      /* ไม่ตัดกลางคำ */
-  overflow-wrap: normal;
-  line-height: 1.35;
-  padding: 6px 10px;
-  border-radius: 10px;
-  display: inline-flex; align-items:center;
-}
-
-/* ปุ่มสลับธีม/ไอคอนขวา: ไม่ให้ไปกินที่ของเมนู */
-.navbar .right-tools{ flex:0 0 auto; }
-
-/* โลโก้แนวตั้งซ้ายที่กินที่: ซ่อนบนจอเล็ก */
+/* ทำเมนูเลื่อนข้างในจอเล็ก */
 @media (max-width: 768px){
-  .brand-vertical{ display:none; }
-  .navbar .nav-links{ justify-content:flex-start; } /* ให้ชิดซ้ายจะเหลือที่มากขึ้น */
+  .navbar .nav-links{
+    flex-wrap: nowrap; 
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .navbar .nav-links a{ flex: 0 0 auto; }
 }
-
-@media (max-width: 420px){
-  .navbar .nav-links a{ font-size: 0.95rem; }
-}
-
