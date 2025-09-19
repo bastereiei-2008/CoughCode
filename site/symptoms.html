@@ -233,5 +233,22 @@
     });
   })();
   </script>
+  <script>
+(function(){
+  const nav = document.querySelector('header.navbar') || document.querySelector('header');
+  if(!nav) return;
+
+  function setNavH(){
+    const h = Math.ceil(nav.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--nav-h', h + 'px');
+  }
+  setNavH();
+  window.addEventListener('resize', setNavH);
+  window.addEventListener('load', setNavH);
+})();
+</script>
+</body>
+</html>
+
 </body>
 </html>
