@@ -10,30 +10,36 @@
 <body>
 <header class="navbar">
   <div class="container row">
-    <div class="logo">CoughCode</div>
+    <a href="#home" class="logo">CoughCode</a>
 
-    <!-- เมนูเดสก์ท็อป (เห็นเฉพาะจอใหญ่) -->
-    <nav class="nav-links">
+    <!-- เดสก์ท็อป: โชว์เมนูเต็ม -->
+    <nav class="nav-links" aria-label="เมนูหลัก">
+      <a href="#home">หน้าหลัก</a>
       <a href="#about">ข้อมูลเพิ่มเติม</a>
       <a href="#aboutus">เกี่ยวกับเรา</a>
       <a href="#howto">วิธีใช้งาน</a>
     </nav>
 
-    <!-- ขวาบน: ปุ่มธีมหรือไอคอนอื่นๆ + ปุ่ม 3 ขีด (เห็นเฉพาะมือถือ) -->
     <div class="right-tools">
-      <!-- ใส่ปุ่มสลับธีมของคุณไว้ตรงนี้ได้ -->
-      <!-- ปุ่ม 3 ขีดแบบไม่ต้องใช้ JS -->
-      <details class="nav-toggle" role="navigation" aria-label="เมนูหลัก">
-        <summary class="hamburger" aria-label="เปิดเมนู"><span></span><span></span><span></span></summary>
-        <div class="sheet">
+      <!-- ปุ่มสลับธีม: วางไว้ตรงนี้เสมอ -->
+      <button id="themeToggle" class="theme-toggle" aria-label="เปลี่ยนธีม">☀️</button>
+
+      <!-- มือถือ: ปุ่ม 3 ขีด + เมนูย่อย -->
+      <details class="nav-toggle" role="navigation" aria-label="เมนูมือถือ">
+        <summary class="hamburger" aria-label="เปิดเมนู">
+          <span></span><span></span><span></span>
+        </summary>
+        <nav class="sheet" aria-label="เมนูย่อย">
+          <a href="#home">หน้าหลัก</a>
           <a href="#about">ข้อมูลเพิ่มเติม</a>
           <a href="#aboutus">เกี่ยวกับเรา</a>
           <a href="#howto">วิธีใช้งาน</a>
-        </div>
+        </nav>
       </details>
     </div>
   </div>
 </header>
+
 
 
   <main>
