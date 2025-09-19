@@ -422,3 +422,35 @@ header.navbar .nav-links a{
 @media (max-width: 768px){
   header.navbar .right-tools{ display:flex !important; }
 }
+
+
+
+
+
+/* แถวปุ่มกลับ */
+.back-row{
+  display:flex; align-items:center;
+  margin: 8px 0 12px;
+}
+
+/* ปุ่มกลับหน้าหลัก */
+.btn-back{
+  display:inline-flex; align-items:center; gap:8px;
+  padding: 10px 14px;
+  min-height: 44px;                 /* ขนาดแตะมาตรฐานมือถือ */
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: inherit;                    /* ใช้สีตามธีม */
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  transition: transform .08s ease, background .15s ease, border-color .15s ease;
+}
+.btn-back:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); }
+.btn-back:active{ transform: translateY(1px); }
+.btn-back .icon{ font-size: 1.1rem; line-height: 1; }
+
+/* จอเล็ก: ดันปุ่มให้ไม่ติดขอบ/โนช และคงอยู่ใต้แถบนำทาง */
+@media (max-width: 768px){
+  .back-row{ padding-top: max(4px, env(safe-area-inset-top)); }
+}
