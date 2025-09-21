@@ -57,33 +57,45 @@
 
 <script>
 (() => {
-  // ดึงผลวินิจฉัยจาก sessionStorage
-  const diagRaw = sessionStorage.getItem('diagnosis');
-  if (!diagRaw) { location.href = 'symptoms.html'; return; }
+  const raw = sessionStorage.getItem('diagnosis');
+  if (!raw) { location.href = 'symptoms.html'; return; }
 
-  let data;
-  try { data = JSON.parse(diagRaw); }
-  catch { data = { conditions:{} }; }
+  let data = { conditions:{} };
+  try { data = JSON.parse(raw) || data; } catch {}
 
-  // แปลงเป็น Top-3 แล้วแสดงผล
-  const box = document.getElementById('resultBox');   // เปลี่ยนให้ตรงกับ id กล่องผลของคุณ
   const entries = Object.entries(data.conditions || {})
-                  .sort((a,b)=>b[1]-a[1]).slice(0,3);
+    .sort((a,b)=>b[1]-a[1]).slice(0,3);
 
-  box.innerHTML = entries.map(([name,p], i) =>
-    `<div class="item"><b>${i+1}. ${name}</b> — ${(p*100).toFixed(1)}%</div>`
-  ).join('');
+  // อัปเดต Top-1
+  if (entries.length){
+    const [name, p] = entries[0];
+    const pct = (p*100).toFixed(1) + '%';
+    const nameEl = document.getElementById('topName');
+    const probEl = document.getElementById('topProb');
+    if (nameEl) nameEl.textContent = name;
+    if (probEl) probEl.textContent = pct;
+  }
 
-  // บอกว่าเป็นผลจำลองหรือไม่
-  if (sessionStorage.getItem('diag_fallback') === '1') {
-    const note = document.getElementById('note');
-    if (note) note.textContent = 'ตัวอย่างการแสดงผล (เชื่อมต่อเซิร์ฟเวอร์ไม่ได้)';
+  // แสดง Top-3 เป็นแถบเปอร์เซ็นต์
+  const list = document.getElementById('top3List');
+  if (list){
+    list.innerHTML = entries.map(([n,p],i)=>`
+      <div class="rowp">
+        <div class="label">${i+1}. ${n}</div>
+        <div class="bar"><i style="width:${(p*100).toFixed(1)}%"></i></div>
+        <div class="pct">${(p*100).toFixed(1)}%</div>
+      </div>
+    `).join('');
+  }
+
+  // แจ้งว่ากำลังใช้ผล fallback หรือไม่
+  if (sessionStorage.getItem('diag_fallback') === '1'){
+    const note = document.getElementById('modeNote');
+    if (note) note.textContent = 'แสดงผลจากข้อมูลอาการ (โหมดออฟไลน์)';
   }
 })();
+  src="theme.js" defer
 </script>
-
-
-  <script src="theme.js" defer></script>
 </body>
 </html>
 
