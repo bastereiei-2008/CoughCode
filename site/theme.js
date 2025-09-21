@@ -1,29 +1,23 @@
 // theme.js
-(function () {
-  const KEY = 'theme'; // 'light' | 'dark'
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+(function(){
+  const KEY = 'theme';
+  const root = document.documentElement;
+  let theme = root.getAttribute('data-theme') || 'light';
 
-  function apply(theme){
-    document.documentElement.setAttribute('data-theme', theme);
-    const cb = document.getElementById('themeToggle');
-    if (cb) cb.checked = (theme === 'dark'); // เปิด=มืด
+  function apply(t){
+    root.setAttribute('data-theme', t);
+    localStorage.setItem(KEY, t);
+    // อัปเดตสถานะปุ่ม toggle ถ้ามี
+    const chk = document.querySelector('#themeToggle');
+    if (chk) chk.checked = (t === 'dark');
   }
 
-  function init(){
-    const saved = localStorage.getItem(KEY);
-    const theme = saved || (prefersDark.matches ? 'dark' : 'light');
-    apply(theme);
-
-    const cb = document.getElementById('themeToggle');
-    if (cb){
-      cb.addEventListener('change', ()=>{
-        const next = cb.checked ? 'dark' : 'light';
-        localStorage.setItem(KEY, next);
-        apply(next);
-      });
+  // ติดตั้ง event ให้สวิตช์
+  document.addEventListener('DOMContentLoaded', () => {
+    const chk = document.querySelector('#themeToggle');
+    if (chk){
+      chk.checked = (theme === 'dark');
+      chk.addEventListener('change', () => apply(chk.checked ? 'dark' : 'light'));
     }
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  });
 })();
