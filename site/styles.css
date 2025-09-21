@@ -697,3 +697,33 @@ label.symptom-item input[type="checkbox"]{
   width: 20px; height: 20px;
   accent-color: var(--primary, #3b82f6);
 }
+
+
+/* ระยะว่างใต้หัวข้อ (ปรับเลขได้ 48–72 ตามขนาดหัวข้อจริง) */
+:root{ --sym-title-space: 56px; }
+
+/* หัวข้อแบบ sticky (คุณมีอยู่แล้ว) */
+.title.sticky{
+  position: sticky;
+  top: calc(var(--nav-h, 56px) + 6px);
+  z-index: 5;
+  /* ดึงหัวข้อให้ซ้อนทับพื้นที่ที่เราสำรองไว้ด้านบนของรายการ */
+  margin-bottom: calc(-1 * var(--sym-title-space));
+  background: var(--bg);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+/* สำรองพื้นที่ว่างด้านบนของรายการให้เท่ากับความสูงหัวข้อ */
+.symptom-list{
+  padding-top: var(--sym-title-space);
+}
+
+/* (ถ้าต้องการ 2 คอลัมน์เมื่อจอกว้างขึ้น) */
+.symptom-list{
+  display: grid; grid-template-columns: 1fr; gap: 10px;
+}
+@media (min-width: 420px){
+  .symptom-list{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+}
