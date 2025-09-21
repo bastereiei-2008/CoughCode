@@ -457,16 +457,6 @@ header.navbar .nav-links a{
 
 
 
-:root { --nav-h: 60px; } /* ค่าเริ่มต้น เผื่อไว้ก่อน – JS จะเขียนทับ */
-
-#symptoms::before{
-  content:"";
-  display:block;
-  height: calc(var(--nav-h) + 10px);
-  margin-top: calc(-1 * (var(--nav-h) + 10px));
-  visibility:hidden;
-  pointer-events:none;
-}
 
 main.card{ padding-top: 0.01px; } /* กัน margin-collapsing */
 
@@ -662,12 +652,6 @@ body{
 }
 
 
-
-
-
-
-
-
 /* กริดแสดงอาการ: มือถือ 1 คอล์มน์, จอกว้าง >= 420px เป็น 2 คอล์มน์ */
 .symptom-list{
   display: grid;
@@ -703,11 +687,6 @@ label.symptom-item input[type="checkbox"]{
 /* ระยะว่างใต้หัวข้อ (ปรับเลขได้ 48–72 ตามขนาดหัวข้อจริง) */
 :root{ --sym-title-space: 56px; }
 
-/* หัวข้อแบบ sticky (คุณมีอยู่แล้ว) */
-.title.sticky{
-  position: sticky;
-  top: calc(var(--nav-h, 56px) + 6px);
-  z-index: 5;
   /* ดึงหัวข้อให้ซ้อนทับพื้นที่ที่เราสำรองไว้ด้านบนของรายการ */
   margin-bottom: calc(-1 * var(--sym-title-space));
   background: var(--bg);
