@@ -4,6 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cough Code — ผลวินิจฉัยเสร็จสิ้น</title>
+    <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+  <title>ผลการประเมิน</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -39,12 +49,8 @@
   #top1, #top1 * { color:#fff !important; }
   #top1 .muted { opacity:1 !important; }
 </style>
-
       </div>
     </section>
-
-
-
     <section class="container section">
       <div class="card">
         <h2>คำแนะนำเบื้องต้น</h2>
