@@ -796,3 +796,40 @@ label.symptom-item input[type="checkbox"]{
 .symptoms-card .actions .btn-primary{
   min-width: 180px; min-height: 44px; border-radius: 14px;
 }
+
+
+
+/* ใช้บอกความสูง navbar + safe area บนมือถือ */
+:root{ --nav-h: 56px; }
+
+/* 1) ให้การ์ดไม่ตัด (ไม่ clip) หัวข้อ sticky */
+.symptoms-card{
+  overflow: visible;                 /* สำคัญ: กัน sticky ถูกตัด */
+}
+
+/* 2) ทำหัวข้ออาการร่วมให้ sticky และมองเห็นเสมอ */
+.symptoms-header{
+  position: sticky;
+  top: calc(var(--nav-h) + env(safe-area-inset-top) + 6px);
+  z-index: 20;
+  background: var(--panel);
+  /* ขยายพื้นหลังให้เต็มขอบด้านในของการ์ด จะดูเป็นแถบลอย */
+  margin: -8px -8px 12px -8px;
+  padding: 10px 12px 12px;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.12);
+}
+
+/* 3) กันรายการไม่ชนใต้หัวข้อ */
+.symptoms-grid{ 
+  margin-top: 6px;
+}
+
+/* 4) มือถือ = 1 คอลัมน์, หน้าจอกว้างขึ้นค่อยเป็น 2 คอลัมน์ (ถ้ายังไม่ได้ตั้ง) */
+.symptoms-grid{
+  display:grid; grid-template-columns:1fr; gap:12px;
+}
+@media (min-width: 900px){
+  .symptoms-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); gap:14px 18px; }
+}
+
