@@ -96,48 +96,35 @@
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1 id="symptoms" class="title">อาการร่วม</h1>
+  <main class="container">
+  <form id="symptomForm" class="symptoms-card">
+    <h1 class="title">อาการร่วม</h1>
     <p class="subtitle">เลือกอาการที่พบร่วมกัน (เลือกได้หลายข้อ)</p>
-    <p id="msg" class="warn"></p>
-    …
+    <p class="hint">เลือกอาการอย่างน้อย <b>1</b> ข้อ</p>
 
+    <div class="symptoms-grid">
+      <label class="symptom-item"><input type="checkbox" value="คัดจมูก"><span>คัดจมูก</span></label>
+      <label class="symptom-item"><input type="checkbox" value="น้ำมูกไหล"><span>น้ำมูกไหล</span></label>
+      <label class="symptom-item"><input type="checkbox" value="เจ็บคอ"><span>เจ็บคอ</span></label>
+      <label class="symptom-item"><input type="checkbox" value="ไข้ต่ำ"><span>ไข้ต่ำ</span></label>
+      <label class="symptom-item"><input type="checkbox" value="ไข้สูง"><span>ไข้สูง</span></label>
+      <label class="symptom-item"><input type="checkbox" value="อ่อนเพลีย"><span>อ่อนเพลีย</span></label>
+      <label class="symptom-item"><input type="checkbox" value="ปวดศีรษะ"><span>ปวดศีรษะ</span></label>
+      <label class="symptom-item"><input type="checkbox" value="เจ็บหน้าอก"><span>เจ็บหน้าอก</span></label>
+      <label class="symptom-item"><input type="checkbox" value="หายใจลำบาก"><span>หายใจลำบาก</span></label>
+      <label class="symptom-item"><input type="checkbox" value="ปวดเมื่อยตามตัว"><span>ปวดเมื่อยตามตัว</span></label>
+      <label class="symptom-item"><input type="checkbox" value="หายใจเร็ว"><span>หายใจเร็ว</span></label>
+      <label class="symptom-item"><input type="checkbox" value="หายใจหอบเหนื่อย"><span>หายใจหอบเหนื่อย</span></label>
+      <label class="symptom-item"><input type="checkbox" value="เบื่ออาหาร"><span>เบื่ออาหาร</span></label>
+      <label class="symptom-item"><input type="checkbox" value="น้ำหนักลด"><span>น้ำหนักลด</span></label>
+      <label class="symptom-item"><input type="checkbox" value="เหงื่อออกตอนกลางคืน"><span>เหงื่อออกตอนกลางคืน</span></label>
+    </div>
 
-
-    <p id="msg" class="warn"></p>
-
-    <form id="symForm">
-      <div class="grid">
-        <!-- 15 อาการตามที่ขอ -->
-        <label class="sym-item"><input type="checkbox" name="sym" value="คัดจมูก"> คัดจมูก</label>
-        <label class="sym-item"><input type="checkbox" name="sym" value="น้ำมูกไหล"> น้ำมูกไหล</label>
-
-        <label class="sym-item"><input type="checkbox" name="sym" value="เจ็บคอ"> เจ็บคอ</label>
-        <label class="sym-item"><input type="checkbox" name="sym" value="ไข้ต่ำ"> ไข้ต่ำ</label>
-
-        <label class="sym-item"><input type="checkbox" name="sym" value="ไข้สูง"> ไข้สูง</label>
-        <label class="sym-item"><input type="checkbox" name="sym" value="อ่อนเพลีย"> อ่อนเพลีย</label>
-
-        <label class="sym-item"><input type="checkbox" name="sym" value="ปวดศีรษะ"> ปวดศีรษะ</label>
-        <label class="sym-item"><input type="checkbox" name="sym" value="เจ็บหน้าอก"> เจ็บหน้าอก</label>
-
-        <label class="sym-item"><input type="checkbox" name="sym" value="หายใจลำบาก"> หายใจลำบาก</label>
-        <label class="sym-item"><input type="checkbox" name="sym" value="ปวดเมื่อยตามตัว"> ปวดเมื่อยตามตัว</label>
-
-        <label class="sym-item"><input type="checkbox" name="sym" value="หายใจเร็ว"> หายใจเร็ว</label>
-        <label class="sym-item"><input type="checkbox" name="sym" value="หายใจหอบเหนื่อย"> หายใจหอบเหนื่อย</label>
-
-        <label class="sym-item"><input type="checkbox" name="sym" value="เบื่ออาหาร"> เบื่ออาหาร</label>
-        <label class="sym-item"><input type="checkbox" name="sym" value="น้ำหนักลด"> น้ำหนักลด</label>
-
-        <label class="sym-item"><input type="checkbox" name="sym" value="เหงื่อออกตอนกลางคืน"> เหงื่อออกตอนกลางคืน</label>
-      </div>
-
-      <div class="actions">
-        <button id="doneBtn" type="button" class="btn" disabled>เสร็จสิ้น</button>
-      </div>
-    </form>
-  </main>
+    <div class="actions">
+      <button type="submit" class="btn-primary">เสร็จสิ้น</button>
+    </div>
+  </form>
+</main>
 
   <script>
   (() => {
