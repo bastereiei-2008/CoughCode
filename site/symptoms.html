@@ -17,8 +17,6 @@
   <title>อาการร่วม</title>
 </head>
 <body>
-  <!-- header/nav เดิมของคุณอยู่ตรงนี้ได้ -->
-
   <main class="container">
     <form id="symptomForm" class="symptoms-card">
       <header class="symptoms-header">
@@ -27,29 +25,21 @@
         <p class="hint">เลือกอาการอย่างน้อย <b>1</b> ข้อ</p>
       </header>
 
-      <!-- รายการอาการ: มือถือ 1 คอลัมน์ / จอกว้าง 2 คอลัมน์ -->
       <div class="symptoms-grid">
         <label class="symptom-item"><input type="checkbox" name="sym" value="คัดจมูก"><span>คัดจมูก</span></label>
         <label class="symptom-item"><input type="checkbox" name="sym" value="น้ำมูกไหล"><span>น้ำมูกไหล</span></label>
-
         <label class="symptom-item"><input type="checkbox" name="sym" value="เจ็บคอ"><span>เจ็บคอ</span></label>
         <label class="symptom-item"><input type="checkbox" name="sym" value="ไข้ต่ำ"><span>ไข้ต่ำ</span></label>
-
         <label class="symptom-item"><input type="checkbox" name="sym" value="ไข้สูง"><span>ไข้สูง</span></label>
         <label class="symptom-item"><input type="checkbox" name="sym" value="อ่อนเพลีย"><span>อ่อนเพลีย</span></label>
-
         <label class="symptom-item"><input type="checkbox" name="sym" value="ปวดศีรษะ"><span>ปวดศีรษะ</span></label>
         <label class="symptom-item"><input type="checkbox" name="sym" value="เจ็บหน้าอก"><span>เจ็บหน้าอก</span></label>
-
         <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจลำบาก"><span>หายใจลำบาก</span></label>
         <label class="symptom-item"><input type="checkbox" name="sym" value="ปวดเมื่อยตามตัว"><span>ปวดเมื่อยตามตัว</span></label>
-
         <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจเร็ว"><span>หายใจเร็ว</span></label>
         <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจหอบเหนื่อย"><span>หายใจหอบเหนื่อย</span></label>
-
         <label class="symptom-item"><input type="checkbox" name="sym" value="เบื่ออาหาร"><span>เบื่ออาหาร</span></label>
         <label class="symptom-item"><input type="checkbox" name="sym" value="น้ำหนักลด"><span>น้ำหนักลด</span></label>
-
         <label class="symptom-item"><input type="checkbox" name="sym" value="เหงื่อออกตอนกลางคืน"><span>เหงื่อออกตอนกลางคืน</span></label>
       </div>
 
@@ -60,8 +50,6 @@
   </main>
 
   <script src="theme.js" defer></script>
-
-  <!-- สคริปต์ส่งข้อมูล (เวอร์ชันที่มี timeout + fallback ที่คุณใช้ได้แล้ว) -->
   <script>
   (() => {
     const API_URL   = "https://coughcode.onrender.com/predict";
@@ -155,45 +143,5 @@
     });
   })();
   </script>
-</body>
-</html>
-  </style>
-</head>
-<body>
-  <main class="container">
- <form id="symptomForm" class="symptoms-card">
-  <header class="symptoms-header">
-    <h1 class="title">อาการร่วม</h1>
-    <p class="subtitle">เลือกอาการที่พบร่วมกัน (เลือกได้หลายข้อ)</p>
-    <p class="hint">เลือกอาการอย่างน้อย <b>1</b> ข้อ</p>
-  </header>
-    
-  
-    <div class="symptoms-grid">
-      <label class="symptom-item"><input type="checkbox" name="sym" value="คัดจมูก"><span>คัดจมูก</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="น้ำมูกไหล"><span>น้ำมูกไหล</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="เจ็บคอ"><span>เจ็บคอ</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="ไข้ต่ำ"><span>ไข้ต่ำ</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="ไข้สูง"><span>ไข้สูง</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="อ่อนเพลีย"><span>อ่อนเพลีย</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="ปวดศีรษะ"><span>ปวดศีรษะ</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="เจ็บหน้าอก"><span>เจ็บหน้าอก</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจลำบาก"><span>หายใจลำบาก</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="ปวดเมื่อยตามตัว"><span>ปวดเมื่อยตามตัว</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจเร็ว"><span>หายใจเร็ว</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจหอบเหนื่อย"><span>หายใจหอบเหนื่อย</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="เบื่ออาหาร"><span>เบื่ออาหาร</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="น้ำหนักลด"><span>น้ำหนักลด</span></label>
-      <label class="symptom-item"><input type="checkbox" name="sym" value="เหงื่อออกตอนกลางคืน"><span>เหงื่อออกตอนกลางคืน</span></label>
-    </div>
-    <div class="actions">
-      <button type="submit" class="btn-primary">เสร็จสิ้น</button>
-    </div>
-  </form>
-</main>
-</script>
-</body>
-</html>
-
 </body>
 </html>
