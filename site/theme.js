@@ -1,22 +1,29 @@
-// theme.js
+// theme.js (แทนที่ทั้งหมด)
 (function(){
   const KEY = 'theme';
   const root = document.documentElement;
-  let theme = root.getAttribute('data-theme') || 'light';
+
+  function readSaved(){
+    const saved = localStorage.getItem(KEY);
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
 
   function apply(t){
     root.setAttribute('data-theme', t);
     localStorage.setItem(KEY, t);
-    // อัปเดตสถานะปุ่ม toggle ถ้ามี
     const chk = document.querySelector('#themeToggle');
     if (chk) chk.checked = (t === 'dark');
   }
 
-  // ติดตั้ง event ให้สวิตช์
+  // ตั้งธีมทันทีตั้งแต่โหลดสคริปต์ (สำคัญกับหน้า record.html)
+  apply(root.getAttribute('data-theme') || readSaved());
+
+  // ติด event ให้สวิตช์
   document.addEventListener('DOMContentLoaded', () => {
     const chk = document.querySelector('#themeToggle');
     if (chk){
-      chk.checked = (theme === 'dark');
+      chk.checked = (root.getAttribute('data-theme') === 'dark');
       chk.addEventListener('change', () => apply(chk.checked ? 'dark' : 'light'));
     }
   });
