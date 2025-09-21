@@ -112,21 +112,21 @@
     <p class="hint">เลือกอาการอย่างน้อย <b>1</b> ข้อ</p>
 
     <div class="symptoms-grid">
-      <label class="symptom-item"><input type="checkbox" value="คัดจมูก"><span>คัดจมูก</span></label>
-      <label class="symptom-item"><input type="checkbox" value="น้ำมูกไหล"><span>น้ำมูกไหล</span></label>
-      <label class="symptom-item"><input type="checkbox" value="เจ็บคอ"><span>เจ็บคอ</span></label>
-      <label class="symptom-item"><input type="checkbox" value="ไข้ต่ำ"><span>ไข้ต่ำ</span></label>
-      <label class="symptom-item"><input type="checkbox" value="ไข้สูง"><span>ไข้สูง</span></label>
-      <label class="symptom-item"><input type="checkbox" value="อ่อนเพลีย"><span>อ่อนเพลีย</span></label>
-      <label class="symptom-item"><input type="checkbox" value="ปวดศีรษะ"><span>ปวดศีรษะ</span></label>
-      <label class="symptom-item"><input type="checkbox" value="เจ็บหน้าอก"><span>เจ็บหน้าอก</span></label>
-      <label class="symptom-item"><input type="checkbox" value="หายใจลำบาก"><span>หายใจลำบาก</span></label>
-      <label class="symptom-item"><input type="checkbox" value="ปวดเมื่อยตามตัว"><span>ปวดเมื่อยตามตัว</span></label>
-      <label class="symptom-item"><input type="checkbox" value="หายใจเร็ว"><span>หายใจเร็ว</span></label>
-      <label class="symptom-item"><input type="checkbox" value="หายใจหอบเหนื่อย"><span>หายใจหอบเหนื่อย</span></label>
-      <label class="symptom-item"><input type="checkbox" value="เบื่ออาหาร"><span>เบื่ออาหาร</span></label>
-      <label class="symptom-item"><input type="checkbox" value="น้ำหนักลด"><span>น้ำหนักลด</span></label>
-      <label class="symptom-item"><input type="checkbox" value="เหงื่อออกตอนกลางคืน"><span>เหงื่อออกตอนกลางคืน</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="คัดจมูก"><span>คัดจมูก</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="น้ำมูกไหล"><span>น้ำมูกไหล</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="เจ็บคอ"><span>เจ็บคอ</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="ไข้ต่ำ"><span>ไข้ต่ำ</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="ไข้สูง"><span>ไข้สูง</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="อ่อนเพลีย"><span>อ่อนเพลีย</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="ปวดศีรษะ"><span>ปวดศีรษะ</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="เจ็บหน้าอก"><span>เจ็บหน้าอก</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจลำบาก"><span>หายใจลำบาก</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="ปวดเมื่อยตามตัว"><span>ปวดเมื่อยตามตัว</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจเร็ว"><span>หายใจเร็ว</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="หายใจหอบเหนื่อย"><span>หายใจหอบเหนื่อย</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="เบื่ออาหาร"><span>เบื่ออาหาร</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="น้ำหนักลด"><span>น้ำหนักลด</span></label>
+      <label class="symptom-item"><input type="checkbox" name="sym" value="เหงื่อออกตอนกลางคืน"><span>เหงื่อออกตอนกลางคืน</span></label>
     </div>
 
     <div class="actions">
@@ -135,111 +135,97 @@
   </form>
 </main>
 
-  <script>
-  (() => {
-    // === ชี้ API จริงของคุณ (Render) ===
-    const API_URL = "https://coughcode.onrender.com/predict";
+<script>
+(() => {
+  const API_URL = "https://coughcode.onrender.com/predict"; // เปลี่ยนเป็นของคุณได้
 
-    const form = document.getElementById('symForm');
-    const btn  = document.getElementById('doneBtn');
-    const msg  = document.getElementById('msg');
+  // ชี้ฟอร์ม + ปุ่มส่ง + ข้อความแนะนำ "เลือกอย่างน้อย 1 ข้อ"
+  const form = document.getElementById('symptomForm');
+  const btn  = form.querySelector('button[type="submit"]');
+  const hint = form.querySelector('.hint') || document.createElement('div');
 
-    // ให้ปุ่มกดได้เมื่อเลือกอย่างน้อย 1 ข้อ
-    function update(){
-      const any = [...form.querySelectorAll('input[name="sym"]:checked')].length > 0;
-      btn.disabled = !any;
-      msg.textContent = any ? '' : 'เลือกอาการอย่างน้อย 1 ข้อ';
-    }
-    form.addEventListener('change', update); update();
-
-    // dataURL (จากหน้าอัดเสียง) -> Blob
-    function dataURLtoBlob(dataURL){
-      const [head, b64] = dataURL.split(',');
-      const mime = (head.match(/:(.*?);/)||[])[1] || 'application/octet-stream';
-      const bin = atob(b64); const u8 = new Uint8Array(bin.length);
-      for (let i=0;i<bin.length;i++) u8[i] = bin.charCodeAt(i);
-      return new Blob([u8], {type:mime});
-    }
-
-    // Fallback คำนวณคะแนนจากอาการ ถ้าเรียก API ไม่สำเร็จ
-    function fallbackFromSymptoms(sym){
-      // ตัวอย่างสมมติ: ไข้หวัด / หลอดลมอักเสบ / ปอดอักเสบ
-      let score = { "ไข้หวัด":0.40, "หลอดลมอักเสบ":0.35, "ปอดอักเสบ":0.25 };
-      const has = k => sym.includes(k);
-
-      // ทางเดินหายใจส่วนบน → ไข้หวัด
-      if (has("คัดจมูก")) score["ไข้หวัด"] += 0.06;
-      if (has("น้ำมูกไหล")) score["ไข้หวัด"] += 0.06;
-      if (has("เจ็บคอ")) score["ไข้หวัด"] += 0.05;
-
-      // ไข้
-      if (has("ไข้ต่ำ")) score["ไข้หวัด"] += 0.04;
-      if (has("ไข้สูง")) { score["ปอดอักเสบ"] += 0.06; score["หลอดลมอักเสบ"] += 0.02; }
-
-      // อ่อนเพลีย/ปวดเมื่อย/ปวดศีรษะ
-      if (has("อ่อนเพลีย")) score["ไข้หวัด"] += 0.02;
-      if (has("ปวดเมื่อยตามตัว")) score["ไข้หวัด"] += 0.02;
-      if (has("ปวดศีรษะ")) score["ไข้หวัด"] += 0.02;
-
-      // อาการทางล่าง/รุนแรง → ปอด/หลอดลม
-      if (has("เจ็บหน้าอก")) score["ปอดอักเสบ"] += 0.06;
-      if (has("หายใจลำบาก")) { score["ปอดอักเสบ"] += 0.08; score["หลอดลมอักเสบ"] += 0.03; }
-      if (has("หายใจเร็ว")) score["ปอดอักเสบ"] += 0.05;
-      if (has("หายใจหอบเหนื่อย")) { score["ปอดอักเสบ"] += 0.08; score["หลอดลมอักเสบ"] += 0.04; }
-
-      // อาการเรื้อรังทั่วไป
-      if (has("เบื่ออาหาร")) score["ปอดอักเสบ"] += 0.02;
-      if (has("น้ำหนักลด")) score["ปอดอักเสบ"] += 0.03;
-      if (has("เหงื่อออกตอนกลางคืน")) score["ปอดอักเสบ"] += 0.03;
-
-      const sum = Object.values(score).reduce((a,b)=>a+b,0);
-      Object.keys(score).forEach(k=>score[k]/=sum);
-      return score;
-    }
-
-    // เมื่อกด "เสร็จสิ้น"
-    btn.addEventListener('click', async ()=>{
-      // ต้องมีเสียงจากหน้า record.html
-      const dataURL = sessionStorage.getItem('audioDataURL');
-      if(!dataURL){ alert('ไม่พบไฟล์เสียง กรุณาบันทึกใหม่'); location.href='./record.html'; return; }
-      const audioBlob = dataURLtoBlob(dataURL);
-
-      const symptoms = [...form.querySelectorAll('input[name="sym"]:checked')].map(el=>el.value);
-      sessionStorage.setItem('symptoms', JSON.stringify(symptoms));
-
-      btn.disabled = true; btn.textContent = 'กำลังส่งข้อมูล...';
-      const fd = new FormData();
-      fd.append('file', audioBlob, 'recording.webm');
-      fd.append('symptoms', JSON.stringify(symptoms));
-
-      try{
-        const r = await fetch(API_URL, { method:'POST', body: fd });
-        if(!r.ok) throw new Error(await r.text());
-        const json = await r.json();
-        sessionStorage.setItem('diagnosis', JSON.stringify(json));
-        sessionStorage.removeItem('diag_fallback');
-        location.href = './result.html';
-      }catch(e){
-        const fb = { conditions: fallbackFromSymptoms(symptoms), note:'fallback' };
-        sessionStorage.setItem('diagnosis', JSON.stringify(fb));
-        sessionStorage.setItem('diag_fallback','1');
-        location.href = './result.html';
-      }
-    });
-  })();
-  </script>
-  <script>
-(function(){
-  const nav = document.querySelector('header.navbar') || document.querySelector('header');
-  if(!nav) return;
-
-  function setNavH(){
-    const h = Math.ceil(nav.getBoundingClientRect().height);
-    document.documentElement.style.setProperty('--nav-h', h + 'px');
+  // เปิด/ปิดปุ่มตามการเลือก
+  function update(){
+    const any = form.querySelectorAll('input[name="sym"]:checked').length > 0;
+    btn.disabled = !any;
+    if (hint) hint.textContent = any ? '' : 'เลือกอาการอย่างน้อย 1 ข้อ';
   }
-  setNavH();
-  window.addEventListener('resize', setNavH);
-  window.addEventListener('load', setNavH);
+  form.addEventListener('change', update);
+  update();
+
+  // dataURL (จากหน้าอัดเสียง) -> Blob
+  function dataURLtoBlob(dataURL){
+    const [head, b64] = dataURL.split(',');
+    const mime = (head.match(/:(.*?);/)||[])[1] || 'application/octet-stream';
+    const bin = atob(b64); const u8 = new Uint8Array(bin.length);
+    for (let i=0;i<bin.length;i++) u8[i] = bin.charCodeAt(i);
+    return new Blob([u8], {type:mime});
+  }
+
+  // fallback ถ้าเรียก API ไม่สำเร็จ
+  function fallbackFromSymptoms(sym){
+    let score = { "ไข้หวัด":0.40, "หลอดลมอักเสบ":0.35, "ปอดอักเสบ":0.25 };
+    const has = k => sym.includes(k);
+    if (has("คัดจมูก")) score["ไข้หวัด"] += 0.06;
+    if (has("น้ำมูกไหล")) score["ไข้หวัด"] += 0.06;
+    if (has("เจ็บคอ"))   score["ไข้หวัด"] += 0.05;
+    if (has("ไข้ต่ำ"))   score["ไข้หวัด"] += 0.04;
+    if (has("ไข้สูง")) { score["ปอดอักเสบ"] += 0.06; score["หลอดลมอักเสบ"] += 0.02; }
+    if (has("อ่อนเพลีย")) score["ไข้หวัด"] += 0.02;
+    if (has("ปวดเมื่อยตามตัว")) score["ไข้หวัด"] += 0.02;
+    if (has("ปวดศีรษะ")) score["ไข้หวัด"] += 0.02;
+    if (has("เจ็บหน้าอก")) score["ปอดอักเสบ"] += 0.06;
+    if (has("หายใจลำบาก")) { score["ปอดอักเสบ"] += 0.08; score["หลอดลมอักเสบ"] += 0.03; }
+    if (has("หายใจเร็ว")) score["ปอดอักเสบ"] += 0.05;
+    if (has("หายใจหอบเหนื่อย")) { score["ปอดอักเสบ"] += 0.08; score["หลอดลมอักเสบ"] += 0.04; }
+    if (has("เบื่ออาหาร")) score["ปอดอักเสบ"] += 0.02;
+    if (has("น้ำหนักลด")) score["ปอดอักเสบ"] += 0.03;
+    if (has("เหงื่อออกตอนกลางคืน")) score["ปอดอักเสบ"] += 0.03;
+    const sum = Object.values(score).reduce((a,b)=>a+b,0);
+    Object.keys(score).forEach(k=>score[k]/=sum);
+    return score;
+  }
+
+  // จัดการ submit ฟอร์ม
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+
+    const dataURL = sessionStorage.getItem('audioDataURL');
+    if(!dataURL){
+      alert('ไม่พบไฟล์เสียง กรุณาอัดเสียงก่อน');
+      location.href='./record.html';
+      return;
+    }
+    const audioBlob = dataURLtoBlob(dataURL);
+
+    // เก็บอาการที่ติ๊กไว้
+    const symptoms = [...form.querySelectorAll('input[name="sym"]:checked')].map(el=>el.value);
+    sessionStorage.setItem('symptoms', JSON.stringify(symptoms));
+
+    // ปิดปุ่มชั่วคราว
+    btn.disabled = true; const oldText = btn.textContent; btn.textContent = 'กำลังส่งข้อมูล...';
+
+    // ส่งไป API (หรือ fallback ถ้า error)
+    const fd = new FormData();
+    fd.append('file', audioBlob, 'recording.webm');
+    fd.append('symptoms', JSON.stringify(symptoms));
+
+    try{
+      const r = await fetch(API_URL, { method:'POST', body: fd });
+      if(!r.ok) throw new Error(await r.text());
+      const json = await r.json();
+      sessionStorage.setItem('diagnosis', JSON.stringify(json));
+      sessionStorage.removeItem('diag_fallback');
+      location.href = './result.html';
+    }catch(e){
+      const fb = { conditions: fallbackFromSymptoms(symptoms), note:'fallback' };
+      sessionStorage.setItem('diagnosis', JSON.stringify(fb));
+      sessionStorage.setItem('diag_fallback','1');
+      location.href = './result.html';
+    }finally{
+      btn.textContent = oldText;
+    }
+  });
 })();
 </script>
 </body>
