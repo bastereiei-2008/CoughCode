@@ -596,3 +596,54 @@ body::before{
   box-shadow: 0 8px 20px rgba(58,124,255,.35);
 }
 .btn-primary:active{ transform: translateY(1px); }
+
+
+
+/* ค่าเริ่มต้น (โหมดมืด) */
+:root{
+  --bg: #0b1722;
+  --bg2: #0e1e2b;
+  --text: #eaf3ff;
+  --muted: rgba(234,243,255,.75);
+  --panel: rgba(255,255,255,.06);
+  --panelSoft: rgba(255,255,255,.05);
+  --panelBorder: rgba(255,255,255,.10);
+  --accent: #3a7cff;
+}
+
+/* โหมดสว่าง: ใช้สีพื้น/เส้น/ตัวหนังสือที่เข้มขึ้น มองชัด */
+:root[data-theme="light"]{
+  --bg: #f4f9ff;          /* สีพื้นหลังหลัก */
+  --bg2: #ffffff;         /* ไล่เฉด/พื้นรอง */
+  --text: #0b1a2b;        /* สีข้อความหลัก (เข้ม) */
+  --muted: #475569;       /* สีคำอธิบาย */
+  --panel: rgba(255,255,255,.95);
+  --panelSoft: rgba(255,255,255,.98);
+  --panelBorder: rgba(15,23,42,.08);
+  --accent: #2563eb;
+}
+
+/* applied ทั่วไป */
+body{
+  color: var(--text);
+  background:
+    radial-gradient(1000px 700px at 50% -200px, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  background-attachment: fixed;
+}
+
+/* การ์ด/รายการ ให้ดึงสีจากตัวแปร จะสว่างจริงในโหมด light */
+.symptoms-card{
+  background: var(--panel);
+  border: 1px solid var(--panelBorder);
+}
+.symptom-item{
+  background: var(--panelSoft);
+  border: 1px solid var(--panelBorder);
+}
+.symptoms-card .subtitle,
+.symptoms-card .hint{ color: var(--muted); }
+
+/* ให้ checkbox ดูชัดในทั้งสองธีม */
+.symptom-item input{ accent-color: var(--accent); }
+
