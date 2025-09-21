@@ -1,4 +1,4 @@
-// theme.js (แทนที่ทั้งหมด)
+// theme.js
 (function(){
   const KEY = 'theme';
   const root = document.documentElement;
@@ -16,7 +16,7 @@
     if (chk) chk.checked = (t === 'dark');
   }
 
-  // ตั้งธีมทันทีตั้งแต่โหลดสคริปต์ (สำคัญกับหน้า record.html)
+  // ตั้งธีมทันที (สำคัญมาก)
   apply(root.getAttribute('data-theme') || readSaved());
 
   // ติด event ให้สวิตช์
@@ -28,3 +28,4 @@
     }
   });
 })();
+
