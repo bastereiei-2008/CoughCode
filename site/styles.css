@@ -647,3 +647,15 @@ body{
 /* ให้ checkbox ดูชัดในทั้งสองธีม */
 .symptom-item input{ accent-color: var(--accent); }
 
+/* หัวข้อแบบ sticky เหนือรายการอาการ */
+.title.sticky{
+  position: sticky;
+  top: calc(var(--nav-h, 56px) + 6px); /* ปรับได้ 48–72 ตามความสูง navbar */
+  z-index: 5;
+  padding: 6px 8px;
+  margin: 0 0 10px 0;                  /* ลดระยะหัวข้อ */
+  background: var(--bg);               /* ใช้พื้นหลังธีมปัจจุบัน */
+  /* กันกรณีพื้นหลังโปร่งแล้วอ่านยาก */
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+}
