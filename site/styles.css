@@ -730,3 +730,69 @@ label.symptom-item input[type="checkbox"]{
 }
 
 
+/* === Symptoms page (stable) === */
+
+/* การ์ดหลัก: ขนาด/ระยะหายใจโล่ง ๆ ทั้งคอมและมือถือ */
+.symptoms-card{
+  max-width: 980px;
+  margin: clamp(16px, 6vh, 48px) auto;      /* มือถือเว้นบนมากขึ้น */
+  padding: clamp(16px, 3.2vw, 28px);
+  border-radius: 20px;
+  background: var(--panel);
+  border: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+}
+
+/* หัวข้อ + คำอธิบาย */
+.symptoms-header .title{
+  font-size: clamp(22px, 3.2vw, 28px);
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 12px 0;                        /* เว้นใต้หัวข้อให้ชัด */
+}
+.symptoms-header .subtitle,
+.symptoms-header .hint{
+  text-align: center;
+  margin: 0 0 12px 0;
+  opacity: .9;
+}
+
+/* กริดรายการ: มือถือ 1 คอล์มน์, จอกว้าง >= 900px เป็น 2 คอล์มน์ */
+.symptoms-grid{
+  display: grid;
+  grid-template-columns: 1fr;                /* มือถือ */
+  gap: 12px;
+  margin-top: 6px;                           /* กันชนหัวข้อแน่นอน */
+}
+@media (min-width: 900px){
+  .symptoms-grid{
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 14px 18px;
+  }
+}
+
+/* กล่องอาการแต่ละอัน */
+label.symptom-item{
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.06);         /* เข้ม/อ่อนตามธีมตัวแปรเดิมของคุณ */
+  border: 1px solid rgba(255,255,255,.10);
+}
+label.symptom-item span{
+  line-height: 1.5;
+}
+
+/* ขนาดเช็กบ็อกซ์ให้กดง่ายบนมือถือ */
+label.symptom-item input[type="checkbox"]{
+  width: 20px; height: 20px;
+  accent-color: var(--primary, #3b82f6);
+}
+
+/* ปุ่มด้านล่างให้อยู่กลาง */
+.symptoms-card .actions{
+  display:flex; justify-content:center; margin-top: 18px;
+}
+.symptoms-card .actions .btn-primary{
+  min-width: 180px; min-height: 44px; border-radius: 14px;
+}
