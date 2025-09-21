@@ -659,3 +659,41 @@ body{
   backdrop-filter: blur(4px);
   border-radius: 10px;
 }
+
+
+
+
+
+
+
+
+/* กริดแสดงอาการ: มือถือ 1 คอล์มน์, จอกว้าง >= 420px เป็น 2 คอล์มน์ */
+.symptom-list{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 420px){
+  .symptom-list{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+/* กล่องอาการให้เล็กลง + คลิกง่าย */
+label.symptom-item{
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;                 /* ลดจากเดิมให้กระชับ */
+  border-radius: 14px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border, rgba(0,0,0,.08));
+}
+
+/* กล่องรวมทั้งหน้าให้ไม่สูงเกิน */
+main.card{ padding: 14px 16px; }
+
+/* ปรับเช็กบ็อกซ์ใหญ่พอกด */
+label.symptom-item input[type="checkbox"]{
+  width: 20px; height: 20px;
+  accent-color: var(--primary, #3b82f6);
+}
